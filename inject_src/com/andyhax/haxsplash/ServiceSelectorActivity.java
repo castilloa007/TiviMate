@@ -2,11 +2,11 @@ package com.andyhax.haxsplash;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import com.andyhax.hook.HookApplication;
-import ar.tvplayer.tv.ui.MainActivity;
+import java.lang.reflect.Method;
 
 public class ServiceSelectorActivity extends Activity {
 
@@ -31,8 +31,21 @@ public class ServiceSelectorActivity extends Activity {
             .setItems(NAMES, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    HookApplication.inject(NAMES[which], XC_URLS[which]);
-                    Intent intent = new Intent(ServiceSelectorActivity.this, MainActivity.class);
+                    try {
+                        // Call the real HookApplication.inject() via reflection
+                        // so we don't conflict with our stub class
+                        Class<?> hookApp = Class.forName("com.andyhax.hook.HookApplication");
+                        Method injectMethod = hookApp.getMethod("inject", String.class, String.class);
+                        injectMethod.invoke(null, NAMES[which], XC_URLS[which]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    // Start the real MainActivity by component name
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName(
+                        "ar.tvplayer.tv",
+                        "ar.tvplayer.tv.ui.MainActivity"
+                    ));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
