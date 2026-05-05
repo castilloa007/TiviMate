@@ -32,19 +32,19 @@ public class ServiceSelectorActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try {
-                        // Call the real HookApplication.inject() via reflection
+                        // inject() is an instance method on the Application singleton
                         Class<?> hookApp = Class.forName("com.andyhax.hook.HookApplication");
                         Method injectMethod = hookApp.getMethod("inject", String.class, String.class);
-                        injectMethod.invoke(null, NAMES[which], XC_URLS[which]);
+                        injectMethod.invoke(getApplication(), NAMES[which], XC_URLS[which]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    // Start LaunchActivity so the normal init flow runs
-                    // with credentials already injected
+                    // Go directly to MainActivity — LaunchActivity tries to fetch
+                    // portals from a dead remote server and crashes/exits
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(
                         "ar.tvplayer.tv",
-                        "com.andyhax.haxsplash.LaunchActivity"
+                        "ar.tvplayer.tv.ui.MainActivity"
                     ));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
