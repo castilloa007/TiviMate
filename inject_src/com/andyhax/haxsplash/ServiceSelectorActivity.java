@@ -2,11 +2,11 @@ package com.andyhax.haxsplash;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import java.lang.reflect.Method;
+import android.widget.Toast;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class ServiceSelectorActivity extends Activity {
 
@@ -32,23 +32,39 @@ public class ServiceSelectorActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try {
-                        // inject() is an instance method on the Application singleton
-                        Class<?> hookApp = Class.forName("com.andyhax.hook.HookApplication");
-                        Method injectMethod = hookApp.getMethod("inject", String.class, String.class);
-                        injectMethod.invoke(getApplication(), NAMES[which], XC_URLS[which]);
+                        // Build a PortalModel and add it to AndyHax._portals
+                        Class<?> portalClass = Class.forName("com.andyhax.haxsplash.PortalModel");
+                        Object portal = portalClass.newInstance();
+
+                        Field idField   = portalClass.getField("id_bClNU2OajLbxJWVW");
+                        Field nameField = portalClass.getField("name_doQhQ7J9PskxUJv5");
+                        Field urlField  = portalClass.getField("url_rH6MnarmmBvhjdPh");
+
+                        idField.set(portal, which + 1);
+                        nameField.set(portal, NAMES[which]);
+                        urlField.set(portal, XC_URLS[which]);
+
+                        // Set AndyHax._portals to a fresh list with just this portal
+                        Class<?> andyHaxClass = Class.forName("com.andyhax.haxsplash.AndyHax");
+                        Field portalsField = andyHaxClass.getField("_portals");
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(portal);
+                        portalsField.set(null, list);
+
+                        // Set current_id to match
+                        Field currentIdField = andyHaxClass.getField("current_id");
+                        currentIdField.set(null, which + 1);
+
+                        // Call AndyHax.m1616Go() to navigate into the app
+                        andyHaxClass.getMethod("m1616Go", String.class, android.content.Context.class)
+                                    .invoke(null, XC_URLS[which], ServiceSelectorActivity.this);
+
+                        finish();
                     } catch (Exception e) {
+                        Toast.makeText(ServiceSelectorActivity.this,
+                            "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
-                    // Go directly to MainActivity — LaunchActivity tries to fetch
-                    // portals from a dead remote server and crashes/exits
-                    Intent intent = new Intent();
-                    intent.setComponent(new ComponentName(
-                        "ar.tvplayer.tv",
-                        "ar.tvplayer.tv.ui.MainActivity"
-                    ));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
                 }
             })
             .setCancelable(false)
