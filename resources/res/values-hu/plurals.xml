@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="_2_res_0x7f110000">
+        <item quantity="other">A jelszónak %d karakter hosszúnak kell lennie</item>
+        <item quantity="one">A jelszónak legalább %d karakter hosszúnak kell lennie</item>
+    </plurals>
+    <plurals name="dup_0x7f110001">
+        <item quantity="other">Előretekerés %d másodperccel</item>
+        <item quantity="one">Előretekerés %d másodperccel</item>
+    </plurals>
+    <plurals name="dup_0x7f110002">
+        <item quantity="other">Visszatekerés %d másodperccel</item>
+        <item quantity="one">Visszatekerés %d másodperccel</item>
+    </plurals>
+    <plurals name="dup_0x7f110004">
+        <item quantity="other">%d források</item>
+        <item quantity="one">%d forrás</item>
+    </plurals>
+    <plurals name="dup_0x7f110005">
+        <item quantity="other">%d évadok</item>
+        <item quantity="one">%d évad</item>
+    </plurals>
+</resources>

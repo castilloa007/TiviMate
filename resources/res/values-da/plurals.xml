@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="_2_res_0x7f110000">
+        <item quantity="other">Kodeord skal minimum være %d karakterer langt</item>
+        <item quantity="one">Kodeord skal minimum være %d karakter langt</item>
+    </plurals>
+    <plurals name="dup_0x7f110001">
+        <item quantity="other">Spol %d sekunder frem</item>
+        <item quantity="one">Spol %d sekund frem</item>
+    </plurals>
+    <plurals name="dup_0x7f110002">
+        <item quantity="other">Spol %d sekunder tilbage</item>
+        <item quantity="one">Spol %d sekund tilbage</item>
+    </plurals>
+    <plurals name="dup_0x7f110004">
+        <item quantity="other">%d kilder</item>
+        <item quantity="one">%d kilde</item>
+    </plurals>
+    <plurals name="dup_0x7f110005">
+        <item quantity="other">%d sæsoner</item>
+        <item quantity="one">%d sæson</item>
+    </plurals>
+</resources>

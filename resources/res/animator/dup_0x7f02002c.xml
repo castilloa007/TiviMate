@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:state_enabled="true"
+        app:dup_0x7f040553="true">
+        <set>
+            <objectAnimator
+                android:interpolator="@interpolator/dup_0x7f0d000f"
+                android:duration="@integer/dup_0x7f0c005d"
+                android:valueTo="@dimen/dup_0x7f0703e1"
+                android:valueType="floatType"
+                android:propertyName="translationZ"
+                android:startDelay="@integer/dup_0x7f0c005c"/>
+        </set>
+    </item>
+    <item android:state_enabled="true">
+        <set>
+            <objectAnimator
+                android:interpolator="@anim/dup_0x7f01002f"
+                android:duration="@integer/dup_0x7f0c005d"
+                android:valueTo="0dp"
+                android:valueType="floatType"
+                android:propertyName="translationZ"/>
+        </set>
+    </item>
+</selector>

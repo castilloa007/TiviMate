@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="_2_res_0x7f110000">
+        <item quantity="other">Password must be at least %d characters long</item>
+        <item quantity="one">Password must be at least %d character long</item>
+    </plurals>
+    <plurals name="dup_0x7f110001">
+        <item quantity="other">Fast forward %d seconds</item>
+        <item quantity="one">Fast forward %d second</item>
+    </plurals>
+    <plurals name="dup_0x7f110002">
+        <item quantity="other">Rewind %d seconds</item>
+        <item quantity="one">Rewind %d second</item>
+    </plurals>
+    <plurals name="dummy_ae_3">false</plurals>
+    <plurals name="dup_0x7f110004">
+        <item quantity="other">%d sources</item>
+        <item quantity="one">%d source</item>
+    </plurals>
+    <plurals name="dup_0x7f110005">
+        <item quantity="other">%d seasons</item>
+        <item quantity="one">%d season</item>
+    </plurals>
+</resources>

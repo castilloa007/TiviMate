@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="_2_res_0x7f110000">
+        <item quantity="other">პაროლი უნდა შეიცავდეს მინიმუმ %d სიმბოლოს</item>
+        <item quantity="one">პაროლი უნდა შეიცავდეს მინიმუმ %d სიმბოლოს</item>
+    </plurals>
+    <plurals name="dup_0x7f110001">
+        <item quantity="other">წინ გადახვევა %d წამით</item>
+        <item quantity="one">წინ გადახვევა %d წამით</item>
+    </plurals>
+    <plurals name="dup_0x7f110002">
+        <item quantity="other">უკან გადახვევა %d წამით</item>
+        <item quantity="one">უკან გადახვევა %d წამით</item>
+    </plurals>
+    <plurals name="dup_0x7f110004">
+        <item quantity="other">%d წყაროები</item>
+        <item quantity="one">%d წყარო</item>
+    </plurals>
+    <plurals name="dup_0x7f110005">
+        <item quantity="other">%d სეზონები</item>
+        <item quantity="one">%d სეზონი</item>
+    </plurals>
+</resources>

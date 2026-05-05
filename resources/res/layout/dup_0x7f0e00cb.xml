@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.leanback.widget.VerticalGridView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:lb="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:id="@+id/dup_0x7f0b0086"
+    android:clipToPadding="false"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    lb:dup_0x7f040179="dup_0x7f0b042e"
+    style="?attr/dup_0x7f04033a"/>

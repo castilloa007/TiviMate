@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="dup_0x7f140400" parent="@style/dup_0x7f1400fe">
+        <item name="dup_0x7f04057d">dup_0x7f0b00bc</item>
+        <item name="dup_0x7f04058a">dup_0x7f0b0199</item>
+    </style>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View
+        android:id="@+id/dup_0x7f0b00c7"
+        android:layout_width="1px"
+        android:layout_height="1px"
+        app:dup_0x7f040357="dup_0x7f0b02db"
+        app:dup_0x7f04035d="dup_0x7f0b02db"
+        app:dup_0x7f040371="dup_0x7f0b02db"
+        app:dup_0x7f040375="dup_0x7f0b02db"/>
+</merge>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="_2_res_0x7f110000">
+        <item quantity="other">Das Passwort muss mindestens %d Zeichen lang sein</item>
+        <item quantity="one">Das Passwort muss mindestens %d Zeichen lang sein</item>
+    </plurals>
+    <plurals name="dup_0x7f110001">
+        <item quantity="other">%d Sekunden vorspulen</item>
+        <item quantity="one">%d Sekunde vorspulen</item>
+    </plurals>
+    <plurals name="dup_0x7f110002">
+        <item quantity="other">%d Sekunden zurückspulen</item>
+        <item quantity="one">%d Sekunde zurückspulen</item>
+    </plurals>
+    <plurals name="dup_0x7f110004">
+        <item quantity="other">%d Quellen</item>
+        <item quantity="one">%d Quelle</item>
+    </plurals>
+    <plurals name="dup_0x7f110005">
+        <item quantity="other">%d Staffeln</item>
+        <item quantity="one">%d Staffel</item>
+    </plurals>
+</resources>

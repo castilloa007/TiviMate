@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dup_0x7f0b0275"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.helper.widget.Flow
+        android:orientation="vertical"
+        android:id="@+id/dup_0x7f0b0267"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:dup_0x7f040180="material_clock_display,material_clock_period_toggle"
+        app:dup_0x7f04026e="@dimen/dup_0x7f07036e"
+        app:dup_0x7f040357="dup_0x7f0b02db"
+        app:dup_0x7f040371="dup_0x7f0b02db"
+        app:dup_0x7f040375="dup_0x7f0b02db"/>
+    <include
+        android:id="@+id/dup_0x7f0b0266"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/material_clock_display"/>
+    <include
+        android:id="@+id/dup_0x7f0b026d"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        layout="@layout/dup_0x7f0e00e4"/>
+    <com.google.android.material.timepicker.ClockFaceView
+        android:id="@+id/dup_0x7f0b0268"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dup_0x7f070059"
+        app:dup_0x7f040370="@+id/dup_0x7f0b0267"
+        app:dup_0x7f040375="dup_0x7f0b02db"/>
+</merge>

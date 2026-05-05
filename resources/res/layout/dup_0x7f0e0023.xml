@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:id="@+id/dup_0x7f0b018c"
+        android:background="@drawable/dup_0x7f080098"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dup_0x7f07005d"
+        android:text="@string/dup_0x7f130040"
+        android:drawableLeft="@drawable/dup_0x7f080099"
+        style="@style/dup_0x7f140168"/>
+    <Button
+        android:id="@+id/dup_0x7f0b0403"
+        android:background="@drawable/dup_0x7f08009b"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dup_0x7f07005d"
+        android:text="@string/dup_0x7f13006a"
+        android:drawableLeft="@drawable/dup_0x7f08009c"
+        style="@style/dup_0x7f140168"/>
+</merge>

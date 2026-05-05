@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="_2_res_0x7f110000">
+        <item quantity="other">Lösenordet måste vara minst %d tecken långt</item>
+        <item quantity="one">Lösenordet måste vara minst %d tecken långt</item>
+    </plurals>
+    <plurals name="dup_0x7f110001">
+        <item quantity="other">Spola framåt %d sekunder</item>
+        <item quantity="one">Spola framåt %d sekund</item>
+    </plurals>
+    <plurals name="dup_0x7f110002">
+        <item quantity="other">Spola tillbaka %d sekunder</item>
+        <item quantity="one">Spola tillbaka %d sekund</item>
+    </plurals>
+    <plurals name="dup_0x7f110004">
+        <item quantity="other">%d källor</item>
+        <item quantity="one">%d källa</item>
+    </plurals>
+    <plurals name="dup_0x7f110005">
+        <item quantity="other">%d säsonger</item>
+        <item quantity="one">säsong %d</item>
+    </plurals>
+</resources>

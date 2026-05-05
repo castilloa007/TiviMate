@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:state_checked="true"
+        android:id="@+id/dup_0x7f0b00c5"
+        android:drawable="@drawable/dup_0x7f0801d5"/>
+    <item
+        android:id="@+id/dup_0x7f0b01f4"
+        android:drawable="@drawable/dup_0x7f0801d9"
+        app:dup_0x7f040555="true"/>
+    <item
+        android:state_checked="false"
+        android:id="@+id/dup_0x7f0b0404"
+        android:drawable="@android:color/transparent"/>
+    <transition
+        android:drawable="@drawable/dup_0x7f0801ca"
+        android:toId="@+id/dup_0x7f0b0404"
+        android:fromId="@+id/dup_0x7f0b00c5"/>
+    <transition
+        android:drawable="@drawable/dup_0x7f0801cd"
+        android:toId="@+id/dup_0x7f0b00c5"
+        android:fromId="@+id/dup_0x7f0b0404"/>
+    <transition
+        android:drawable="@drawable/dup_0x7f0801cc"
+        android:toId="@+id/dup_0x7f0b0404"
+        android:fromId="@+id/dup_0x7f0b01f4"/>
+    <transition
+        android:drawable="@drawable/dup_0x7f0801ce"
+        android:toId="@+id/dup_0x7f0b01f4"
+        android:fromId="@+id/dup_0x7f0b0404"/>
+    <transition
+        android:drawable="@drawable/dup_0x7f0801cb"
+        android:toId="@+id/dup_0x7f0b00c5"
+        android:fromId="@+id/dup_0x7f0b01f4"/>
+    <transition
+        android:drawable="@drawable/dup_0x7f0801c9"
+        android:toId="@+id/dup_0x7f0b01f4"
+        android:fromId="@+id/dup_0x7f0b00c5"/>
+</animated-selector>

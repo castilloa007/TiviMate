@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="_2_res_0x7f110000">
+        <item quantity="other">Ο κωδικός πρέπει να είναι %d χαρακτήρες το λιγότερο</item>
+        <item quantity="one">Ο κωδικός πρέπει να είναι %d χαρακτήρες το λιγότερο</item>
+    </plurals>
+    <plurals name="dup_0x7f110001">
+        <item quantity="other">Γρήγορη προώθηση κατά %d δευτερόλεπτα</item>
+        <item quantity="one">Γρήγορη προώθηση κατά %d δευτερόλεπτο</item>
+    </plurals>
+    <plurals name="dup_0x7f110002">
+        <item quantity="other">Μετάβαση προς τα πίσω κατά %d δευτερόλεπτα</item>
+        <item quantity="one">Μετάβαση προς τα πίσω κατά %d δευτερόλεπτο</item>
+    </plurals>
+    <plurals name="dup_0x7f110004">
+        <item quantity="other">%d Πηγές</item>
+        <item quantity="one">%d Πηγή</item>
+    </plurals>
+    <plurals name="dup_0x7f110005">
+        <item quantity="other">%d κύκλοι</item>
+        <item quantity="one">%d κύκλος</item>
+    </plurals>
+</resources>

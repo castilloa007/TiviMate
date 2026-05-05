@@ -1,0 +1,10 @@
+# Original APK
+*.apk
+# Disassembled output (very large)
+tivimate_out/
+# Build artifacts
+inject_src/classes.dex
+modified_unsigned.apk
+# Keystore
+*.keystore
+*.jks
