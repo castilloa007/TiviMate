@@ -33,18 +33,18 @@ public class ServiceSelectorActivity extends Activity {
                 public void onClick(DialogInterface dialog, int which) {
                     try {
                         // Call the real HookApplication.inject() via reflection
-                        // so we don't conflict with our stub class
                         Class<?> hookApp = Class.forName("com.andyhax.hook.HookApplication");
                         Method injectMethod = hookApp.getMethod("inject", String.class, String.class);
                         injectMethod.invoke(null, NAMES[which], XC_URLS[which]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    // Start the real MainActivity by component name
+                    // Start LaunchActivity so the normal init flow runs
+                    // with credentials already injected
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(
                         "ar.tvplayer.tv",
-                        "ar.tvplayer.tv.ui.MainActivity"
+                        "com.andyhax.haxsplash.LaunchActivity"
                     ));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
