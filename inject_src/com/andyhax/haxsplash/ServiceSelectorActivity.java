@@ -14,10 +14,10 @@ public class ServiceSelectorActivity extends Activity {
         "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80"
     };
     private static final String[] USER  = {
-        "AEGVXXZVZV", "Melli3B3llie@832", "icastil@1997", ""
+        "AEGVXXZVZV", "Melli3B3llie@832", "icastil@1997", "username"
     };
     private static final String[] PASS  = {
-        "236267373", "Fir3F@xed2020", "TheFireF@x3733", ""
+        "236267373", "Fir3F@xed2020", "TheFireF@x3733", "password"
     };
 
     @Override
@@ -29,7 +29,7 @@ public class ServiceSelectorActivity extends Activity {
         AndyHax._portals.clear();
         for (int i = 0; i < NAMES.length; i++) {
             PortalModel pm = new PortalModel();
-            pm.id_bClNU2OajLbxJWVW   = i + 1;
+            pm.id_bClNU2OajLbxJWVW   = i;
             pm.name_doQhQ7J9PskxUJv5 = NAMES[i];
             pm.url_rH6MnarmmBvhjdPh  = xc(HOST[i], USER[i], PASS[i]);
             AndyHax._portals.add(pm);
