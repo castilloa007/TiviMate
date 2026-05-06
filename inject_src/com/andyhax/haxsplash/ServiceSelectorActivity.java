@@ -8,10 +8,10 @@ import android.os.Bundle;
 public class ServiceSelectorActivity extends Activity {
 
     private static final String[] NAMES = {
-        "Papai", "Mel", "Ivan", "http://ky-tv.cc:80"
+        "Papai", "Mel", "Ivan", "ky-tv.cc:80"
     };
     private static final String[] HOST  = {
-        "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80"
+        "ky-tv.cc:80", "ky-tv.cc:80", "ky-tv.cc:80", "ky-tv.cc:80"
     };
     private static final String[] USER  = {
         "AEGVXXZVZV", "Melli3B3llie@832", "icastil@1997", "username"
