@@ -13,13 +13,13 @@ public class ServiceSelectorActivity extends Activity {
         "Xtream Codes"
     };
     private static final String[] HOST  = {
-        ""
+        "ky-tv.cc:80"
     };
     private static final String[] USER  = {
-        ""
+        "username"
     };
     private static final String[] PASS  = {
-        ""
+        "password"
     };
 
     @Override
