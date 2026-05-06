@@ -10,7 +10,7 @@ public class ServiceSelectorActivity extends Activity {
     // Keep at least one portal so the Service screen has selectable options.
     // This opens TiviMate's Xtream form where user can type credentials.
     private static final String[] NAMES = {
-        "Xtream Codes"
+        "ky-tv.cc:80"
     };
     private static final String[] HOST  = {
         "ky-tv.cc:80"
