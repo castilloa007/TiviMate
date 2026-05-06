@@ -7,13 +7,18 @@ import android.os.Bundle;
 
 public class ServiceSelectorActivity extends Activity {
 
-    private static final String[] NAMES = {"Papai", "Mel", "Ivan"};
+    private static final String[] NAMES = {
+        "Papai", "Mel", "Ivan", "http://ky-tv.cc:80"
+    };
     private static final String[] HOST  = {
-        "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80"};
+        "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80"
+    };
     private static final String[] USER  = {
-        "AEGVXXZVZV", "Melli3B3llie@832", "icastil@1997"};
+        "AEGVXXZVZV", "Melli3B3llie@832", "icastil@1997", ""
+    };
     private static final String[] PASS  = {
-        "236267373", "Fir3F@xed2020", "TheFireF@x3733"};
+        "236267373", "Fir3F@xed2020", "TheFireF@x3733", ""
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
