@@ -7,86 +7,73 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.io.File;
 
 public class ServiceSelectorActivity extends Activity {
 
     private static final String PREFS   = "svc_sel";
     private static final String KEY_URL = "saved_url";
 
-    private static final String[] NAMES = {
-        "Papai",
-        "Mel",
-        "Ivan",
-        "Custom..."
-    };
+    // Preset accounts (name shown in list)
+    private static final String[] PRESET_NAMES = { "Papai", "Mel", "Ivan" };
+    private static final String[] PRESET_HOST  = {
+        "http://ky-tv.cc:80", "http://ky-tv.cc:80", "http://ky-tv.cc:80" };
+    private static final String[] PRESET_USER  = {
+        "AEGVXXZVZV", "Melli3B3llie@832", "icastil@1997" };
+    private static final String[] PRESET_PASS  = {
+        "236267373",  "Fir3F@xed2020",    "TheFireF@x3733" };
 
-    private static final String[] XC_URLS = {
-        "xc:{\"h\":\"http://ky-tv.cc:80\",\"u\":\"AEGVXXZVZV\",\"p\":\"236267373\",\"o\":\"ts\"}",
-        "xc:{\"h\":\"http://ky-tv.cc:80\",\"u\":\"Melli3B3llie@832\",\"p\":\"Fir3F@xed2020\",\"o\":\"ts\"}",
-        "xc:{\"h\":\"http://ky-tv.cc:80\",\"u\":\"icastil@1997\",\"p\":\"TheFireF@x3733\",\"o\":\"ts\"}",
-        null  // placeholder for Custom
+    // Dialog list items
+    private static final String[] MENU = {
+        "Papai", "Mel", "Ivan", "Add custom account", "Change account"
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Always populate _portals so "Add playlist → Service" shows our options
-        populatePortals();
-
-        // If a playlist was already chosen before, skip selector and launch directly
         SharedPreferences prefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         String savedUrl = prefs.getString(KEY_URL, null);
+
         if (savedUrl != null) {
-            launchWithUrl(savedUrl);
-            return;
-        }
-
-        // First run — show selector
-        showSelector();
-    }
-
-    private void populatePortals() {
-        try {
-            Class<?> portalClass  = Class.forName("com.andyhax.haxsplash.PortalModel");
-            Class<?> andyHaxClass = Class.forName("com.andyhax.haxsplash.AndyHax");
-            Field portalsField    = andyHaxClass.getField("_portals");
-            Field idField         = portalClass.getField("id_bClNU2OajLbxJWVW");
-            Field nameField       = portalClass.getField("name_doQhQ7J9PskxUJv5");
-            Field urlField        = portalClass.getField("url_rH6MnarmmBvhjdPh");
-
-            ArrayList<Object> list = new ArrayList<>();
-            for (int i = 0; i < XC_URLS.length - 1; i++) {   // skip "Custom..."
-                Object p = portalClass.newInstance();
-                idField.set(p, i + 1);
-                nameField.set(p, NAMES[i]);
-                urlField.set(p, XC_URLS[i]);
-                list.add(p);
-            }
-            portalsField.set(null, list);
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Already have a saved account — go straight in
+            injectAndLaunch(savedUrl);
+        } else {
+            showMainMenu();
         }
     }
 
-    private void showSelector() {
+    private void showMainMenu() {
         new AlertDialog.Builder(this)
-            .setTitle("Select Service")
-            .setItems(NAMES, new DialogInterface.OnClickListener() {
+            .setTitle("Select Account")
+            .setItems(MENU, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (which == NAMES.length - 1) {
-                        showCustomDialog();
-                    } else {
-                        saveAndLaunch(XC_URLS[which]);
+                    switch (which) {
+                        case 0: case 1: case 2:
+                            // Papai / Mel / Ivan
+                            String xcUrl = buildXcUrl(
+                                PRESET_HOST[which], PRESET_USER[which], PRESET_PASS[which]);
+                            saveAndLaunch(xcUrl);
+                            break;
+                        case 3:
+                            showCustomForm(null);
+                            break;
+                        case 4:
+                            // Clear saved account and show selector again
+                            getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                                .edit().remove(KEY_URL).apply();
+                            showMainMenu();
+                            break;
                     }
                 }
             })
@@ -94,83 +81,188 @@ public class ServiceSelectorActivity extends Activity {
             .show();
     }
 
-    private void showCustomDialog() {
+    private void showCustomForm(final String prefillXcUrl) {
+        // Parse prefill if editing existing
+        String[] prefill = prefillXcUrl != null
+            ? parseXcUrl(prefillXcUrl)
+            : new String[]{"", "", ""};
+
+        int pad = (int)(16 * getResources().getDisplayMetrics().density);
+
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        int pad = (int)(16 * getResources().getDisplayMetrics().density);
         layout.setPadding(pad, pad, pad, 0);
 
-        final EditText etHost = new EditText(this);
-        etHost.setHint("Host (e.g. http://server.com:8080)");
-        etHost.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
-        layout.addView(etHost, new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        final EditText etUser = new EditText(this);
-        etUser.setHint("Username");
-        layout.addView(etUser, new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        final EditText etPass = new EditText(this);
-        etPass.setHint("Password");
+        final EditText etHost = makeField("Server URL  (e.g. http://server.com:8080)", prefill[0]);
+        final EditText etUser = makeField("Username", prefill[1]);
+        final EditText etPass = makeField("Password", prefill[2]);
         etPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        layout.addView(etPass, new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        layout.addView(label("Server URL"));
+        layout.addView(etHost);
+        layout.addView(label("Username"));
+        layout.addView(etUser);
+        layout.addView(label("Password"));
+        layout.addView(etPass);
 
         new AlertDialog.Builder(this)
-            .setTitle("Custom Xtream")
+            .setTitle("Custom Account")
             .setView(layout)
             .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(DialogInterface d, int w) {
                     String host = etHost.getText().toString().trim();
                     String user = etUser.getText().toString().trim();
                     String pass = etPass.getText().toString().trim();
                     if (host.isEmpty() || user.isEmpty() || pass.isEmpty()) {
                         Toast.makeText(ServiceSelectorActivity.this,
-                            "All fields required", Toast.LENGTH_SHORT).show();
-                        showCustomDialog();
+                            "All fields are required", Toast.LENGTH_SHORT).show();
+                        showCustomForm(prefillXcUrl);
                         return;
                     }
-                    String url = "xc:{\"h\":\"" + host + "\",\"u\":\"" + user +
-                                 "\",\"p\":\"" + pass + "\",\"o\":\"ts\"}";
-                    saveAndLaunch(url);
+                    saveAndLaunch(buildXcUrl(host, user, pass));
                 }
             })
             .setNegativeButton("Back", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    showSelector();
-                }
+                public void onClick(DialogInterface d, int w) { showMainMenu(); }
             })
             .setCancelable(false)
             .show();
     }
 
+    // ── helpers ──────────────────────────────────────────────────────────────
+
+    private static String buildXcUrl(String host, String user, String pass) {
+        return "xc:{\"h\":\"" + host + "\",\"u\":\"" + user +
+               "\",\"p\":\"" + pass + "\",\"o\":\"ts\"}";
+    }
+
+    /** Parse xc:{...} back to [host, user, pass] */
+    private static String[] parseXcUrl(String xcUrl) {
+        try {
+            String json = xcUrl.substring(3); // strip "xc:"
+            String h = extract(json, "\"h\":\"");
+            String u = extract(json, "\"u\":\"");
+            String p = extract(json, "\"p\":\"");
+            return new String[]{h, u, p};
+        } catch (Exception e) {
+            return new String[]{"", "", ""};
+        }
+    }
+    private static String extract(String json, String key) {
+        int s = json.indexOf(key) + key.length();
+        int e = json.indexOf('"', s);
+        return json.substring(s, e);
+    }
+
+    private EditText makeField(String hint, String text) {
+        EditText et = new EditText(this);
+        et.setHint(hint);
+        et.setText(text);
+        et.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
+        et.setLayoutParams(new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return et;
+    }
+
+    private TextView label(String text) {
+        TextView tv = new TextView(this);
+        tv.setText(text);
+        int pad = (int)(4 * getResources().getDisplayMetrics().density);
+        tv.setPadding(0, pad, 0, 0);
+        return tv;
+    }
+
     private void saveAndLaunch(String xcUrl) {
         getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .edit().putString(KEY_URL, xcUrl).apply();
-        launchWithUrl(xcUrl);
+        injectAndLaunch(xcUrl);
     }
 
-    private void launchWithUrl(String xcUrl) {
+    private void injectAndLaunch(String xcUrl) {
+        // Write directly to TiviMate's SQLite DB so the playlist persists
         try {
-            Class<?> hookApp    = Class.forName("com.andyhax.hook.HookApplication");
-            java.lang.reflect.Method injectMethod =
-                hookApp.getMethod("inject", String.class, String.class);
-            // inject() is static native — pass null as instance
-            injectMethod.invoke(null, xcUrl, xcUrl);
+            insertPlaylistToDb(xcUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         Intent intent = new Intent();
         intent.setComponent(new ComponentName(
-            "ar.tvplayer.tv",
-            "ar.tvplayer.tv.ui.MainActivity"
-        ));
+            "ar.tvplayer.tv", "ar.tvplayer.tv.ui.MainActivity"));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * Insert (or replace) a single Xtream Codes playlist entry into
+     * TiviMate's Room database.
+     * Table: playlists
+     * We determine the exact column layout by inspecting the live schema at runtime.
+     */
+    private void insertPlaylistToDb(String xcUrl) throws Exception {
+        String[] parts = parseXcUrl(xcUrl);
+        String host = parts[0], user = parts[1], pass = parts[2];
+        String name = resolveName(user);
+
+        // DB lives at /data/data/ar.tvplayer.tv/databases/tvplayer_db
+        File dbFile = new File(getApplicationInfo().dataDir, "databases/tvplayer_db");
+        if (!dbFile.exists()) return;
+
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(
+            dbFile.getAbsolutePath(), null, SQLiteDatabase.OPEN_READWRITE);
+
+        // Inspect actual columns so we don't crash on schema mismatch
+        android.database.Cursor pragma = db.rawQuery(
+            "PRAGMA table_info(playlists)", null);
+        StringBuilder cols = new StringBuilder();
+        StringBuilder vals = new StringBuilder();
+        java.util.Map<String, String> row = new java.util.LinkedHashMap<>();
+        while (pragma.moveToNext()) {
+            String col = pragma.getString(pragma.getColumnIndex("name"));
+            String dflt = pragma.getString(pragma.getColumnIndex("dflt_value"));
+            // Map known semantic column names → values
+            String v = null;
+            String cl = col.toLowerCase();
+            if (cl.contains("name"))                      v = "'" + sqlEsc(name) + "'";
+            else if (cl.contains("url") || cl.contains("xc") || cl.contains("src"))
+                                                          v = "'" + sqlEsc(xcUrl) + "'";
+            else if (cl.contains("host") || cl.equals("h")) v = "'" + sqlEsc(host) + "'";
+            else if (cl.contains("user"))                 v = "'" + sqlEsc(user) + "'";
+            else if (cl.contains("pass") || cl.contains("pwd")) v = "'" + sqlEsc(pass) + "'";
+            else if (cl.contains("type") || cl.contains("kind")) v = "2"; // 2 = Xtream
+            else if (cl.contains("enabled") || cl.contains("active")) v = "1";
+            else if (cl.contains("sort") || cl.contains("order") || cl.contains("pos")) v = "0";
+            else if (cl.contains("id") && !cl.contains("tvg")) v = null; // autoincrement
+            else if (dflt != null)                        v = dflt;
+            else                                          v = "''";
+
+            if (v != null) {
+                row.put(col, v);
+            }
+        }
+        pragma.close();
+
+        if (row.isEmpty()) { db.close(); return; }
+
+        String colList = android.text.TextUtils.join(", ", row.keySet());
+        String valList = android.text.TextUtils.join(", ", row.values());
+        db.execSQL("INSERT OR REPLACE INTO playlists (" + colList + ") VALUES (" + valList + ")");
+        db.close();
+
+        Toast.makeText(this, "Playlist saved: " + name, Toast.LENGTH_SHORT).show();
+    }
+
+    private String resolveName(String user) {
+        for (int i = 0; i < PRESET_USER.length; i++) {
+            if (PRESET_USER[i].equals(user)) return PRESET_NAMES[i];
+        }
+        return user; // use username as name for custom accounts
+    }
+
+    private static String sqlEsc(String s) {
+        return s.replace("'", "''");
     }
 }
